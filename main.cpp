@@ -15,6 +15,7 @@ static int action;
 static int lineColor;
 static int fillColor;
 static int val =0;
+static int currentActionSelected = 0; //0 means nothing selected
 
 static GLfloat chosenColor[] = {1.0f,1.0f,1.0f};//store the line_color
 static GLfloat fillChosenColor[] = {1.0f,1.0f,1.0f};//store the fill_color
@@ -79,6 +80,8 @@ void mouse_move(int x, int y)
 
 void draw_polygon(int button, int state, int x, int y)
 {
+    if (currentActionSelected==0)
+        return;
     currentPt = std::array<int, 2>{x, vp_height-y};
 
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
@@ -90,8 +93,11 @@ void draw_polygon(int button, int state, int x, int y)
 
     }
     if ( button == GLUT_MIDDLE_BUTTON && state == GLUT_DOWN)
+    {
         //closes polygon with the press of middle button
         closed = true;
+        currentActionSelected = 0;
+    }
 
 }
 
@@ -106,6 +112,7 @@ void actionMenu(int value)
     case 2:
         glutDisplayFunc(display);
         glutMouseFunc(draw_polygon);
+        currentActionSelected = 1; // Selected action = draw polygon
         break;
     }
 }
