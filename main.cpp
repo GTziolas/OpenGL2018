@@ -51,8 +51,6 @@ void display(void)
     glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT);
 
-
-
     if ( !pts.empty() ) //check if array is empty
     {
 
@@ -98,7 +96,6 @@ void draw_polygon(int button, int state, int x, int y)
         closed = true;
         currentActionSelected = 0;
     }
-
 }
 
 void actionMenu(int value)
@@ -116,7 +113,6 @@ void actionMenu(int value)
         break;
     }
 }
-
 
 void lineColorMenu (int value)
 {
@@ -293,7 +289,6 @@ void shapeColorMenu (int value)
     }
 }
 
-
 int main(int argc, char **argv)
 {
     glutInit(&argc, argv);
@@ -365,11 +360,9 @@ int main(int argc, char **argv)
     glutDisplayFunc(display);
     glutMouseFunc(draw_polygon);
 
-   // initOpenGL();
     glMatrixMode( GL_PROJECTION );
     glOrtho(0.0f, (float)vp_width, 0.0f, (float)vp_height, -1.0, 1.0);
     glutIdleFunc(display);
     glutMainLoop();
     return 0;
-
 }
