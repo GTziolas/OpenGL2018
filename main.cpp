@@ -16,7 +16,7 @@ static int lineColor;
 static int fillColor;
 static int val =0;
 
-static GLfloat chosenColor[] = {1.0f,1.0f,1.0f};//store the line_color 
+static GLfloat chosenColor[] = {1.0f,1.0f,1.0f};//store the line_color
 static GLfloat fillChosenColor[] = {1.0f,1.0f,1.0f};//store the fill_color
 
 
@@ -49,22 +49,22 @@ void display(void)
 {
     glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT);
-    
-    
-    
+
+
+
     if ( !pts.empty() ) //check if array is empty
     {
-         
+
         glBegin(GL_LINE_STRIP);
         glColor3f(chosenColor[0],chosenColor[1],chosenColor[2]);//paint the lines
         for ( auto &pt : pts )
             glVertex2f( (float)pt[0], (float)pt[1] );
         auto &endPt = closed ? pts.front() : currentPt;
         glVertex2f( (float)endPt[0], (float)endPt[1] );
-       
+
         polygons.push_back(pts);
         glEnd();
-        
+
     }
 
     glFlush();
@@ -87,7 +87,7 @@ void draw_polygon(int button, int state, int x, int y)
             pts.clear(); // restart if last action was close
         closed = false;
         pts.push_back( currentPt );
-        
+
     }
     if ( button == GLUT_MIDDLE_BUTTON && state == GLUT_DOWN)
         //closes polygon with the press of middle button
@@ -115,8 +115,8 @@ void lineColorMenu (int value)
 {
     switch (value)
     {
-    case 1:                                                         
-        
+    case 1:
+
         chosenColor[0] = 1.0f;
         chosenColor[1] = 0.0f;
         chosenColor[2] = 0.0f;
@@ -149,13 +149,13 @@ void lineColorMenu (int value)
     case 6:
         chosenColor[0] = 0.960784f;
         chosenColor[1] = 0.960784f;
-        chosenColor[2] = 0.862745f;       
+        chosenColor[2] = 0.862745f;
         break;
 
     case 7:
         chosenColor[0] = 0.647059f;
         chosenColor[1] = 0.164706f;
-        chosenColor[2] = 0.164706; 
+        chosenColor[2] = 0.164706;
         break;
 
     case 8:
@@ -171,43 +171,43 @@ void lineColorMenu (int value)
         break;
 
     case 10:
-        chosenColor[0] = 1.0f; 
-        chosenColor[1] = 0.752941f; 
+        chosenColor[0] = 1.0f;
+        chosenColor[1] = 0.752941f;
         chosenColor[2] = 0.796078f;
         break;
 
     case 11:
-        chosenColor[0] = 1.0f;  
-        chosenColor[1] = 0.843137f;  
+        chosenColor[0] = 1.0f;
+        chosenColor[1] = 0.843137f;
         chosenColor[2] = 0.0f;
         break;
 
     case 12:
-        chosenColor[0] = 0.294118f;   
-        chosenColor[1] = 0.0f;  
+        chosenColor[0] = 0.294118f;
+        chosenColor[1] = 0.0f;
         chosenColor[2] = 0.509804f;
         break;
 
     case 13:
-        chosenColor[0] = 0.12549f;   
-        chosenColor[1] = 0.698039f;  
+        chosenColor[0] = 0.12549f;
+        chosenColor[1] = 0.698039f;
         chosenColor[2] = 0.666667f;
         break;
 
     case 14:
-        chosenColor[0] = 0.0f;  
-        chosenColor[1] = 0.0f;    
-        chosenColor[2] = 0.803922f; 
+        chosenColor[0] = 0.0f;
+        chosenColor[1] = 0.0f;
+        chosenColor[2] = 0.803922f;
         break;
 
     case 15:
-        chosenColor[0] = 0.854902f;  
-        chosenColor[1] = 0.439216f; 
+        chosenColor[0] = 0.854902f;
+        chosenColor[1] = 0.439216f;
         chosenColor[2] = 0.839216f;
         break;
 
     case 16:
-        chosenColor[0] = 0.815686f;   
+        chosenColor[0] = 0.815686f;
         chosenColor[1] = 0.12549f;
         chosenColor[2] = 0.564706f;
         break;
@@ -355,8 +355,8 @@ int main(int argc, char **argv)
     //glutAddMenuEntry("FILL_COLOR", sub3);
     glutAttachMenu(GLUT_RIGHT_BUTTON);//right click to make menu appear
 
-    //glutDisplayFunc(display);
-    //glutMouseFunc(draw_polygon);
+    glutDisplayFunc(display);
+    glutMouseFunc(draw_polygon);
 
    // initOpenGL();
     glMatrixMode( GL_PROJECTION );
