@@ -2,9 +2,13 @@
 #include <stdio.h>
 #include <vector>
 #include <array>
+#include <iostream>
+#include <sstream>
 
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 500
+
+using namespace std;
 
 int vp_width = 600;
 int vp_height = 500;
@@ -23,11 +27,13 @@ static GLfloat fillChosenColor[] = {1.0f,1.0f,1.0f};//store the fill_color
 
 std::array<int, 2> currentPt;
 std::vector<std::array<int, 2>> pts;
+std::vector<std::array<int, 2>> points;
 bool closed = false;
 
 //thelw domh na krataei ta polugwna,den kserw an einai swsto
 //tsekare sthn 63 isws kati tetoio
 std::vector<std::vector<std::array<int, 2>>> polygons;
+
 
 void menu(int value)
 {
@@ -88,11 +94,20 @@ void draw_polygon(int button, int state, int x, int y)
             pts.clear(); // restart if last action was close
         closed = false;
         pts.push_back( currentPt );
+        points.push_back(currentPt);
 
     }
     if ( button == GLUT_MIDDLE_BUTTON && state == GLUT_DOWN)
     {
+        int j =0;
         //closes polygon with the press of middle button
+            for (int i=0; i<pts.size(); i++)
+            {
+                printf("ola ta simeia %d %d\n", points[i], points[j]);
+                ++j;
+            }
+            points.clear()
+
         closed = true;
         currentActionSelected = 0;
     }
@@ -289,6 +304,7 @@ void shapeColorMenu (int value)
     }
 }
 
+
 int main(int argc, char **argv)
 {
     glutInit(&argc, argv);
@@ -363,6 +379,7 @@ int main(int argc, char **argv)
     glMatrixMode( GL_PROJECTION );
     glOrtho(0.0f, (float)vp_width, 0.0f, (float)vp_height, -1.0, 1.0);
     glutIdleFunc(display);
+
     glutMainLoop();
     return 0;
 }
