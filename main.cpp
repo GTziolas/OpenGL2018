@@ -1,3 +1,4 @@
+#include <math.h>
 #include <GL/glut.h>
 #include <stdio.h>
 #include <vector>
@@ -13,8 +14,11 @@ using namespace std;
 int vp_width = 600;
 int vp_height = 500;
 
+
+
 static int win;
 static int mainmenu;
+static int rulemenu;
 static int action;
 static int lineColor;
 static int fillColor;
@@ -23,7 +27,6 @@ static int currentActionSelected = 0; //0 means nothing selected
 
 static GLfloat chosenColor[] = {1.0f,1.0f,1.0f};//store the line_color
 static GLfloat fillChosenColor[] = {1.0f,1.0f,1.0f};//store the fill_color
-
 
 std::array<int, 2> currentPt;
 std::vector<std::array<int, 2>> pts;
@@ -34,14 +37,15 @@ bool closed = false;
 //tsekare sthn 63 isws kati tetoio
 std::vector<std::vector<std::array<int, 2>>> polygons;
 
-
 void menu(int value)
 {
     if (value ==0)
     {
         glutDestroyMenu(win);
         exit(0);
-    }else{
+    }
+    else
+    {
         val = value;
     }
     glutPostRedisplay();
@@ -59,7 +63,6 @@ void display(void)
 
     if ( !pts.empty() ) //check if array is empty
     {
-
         glBegin(GL_LINE_STRIP);
         glColor3f(chosenColor[0],chosenColor[1],chosenColor[2]);//paint the lines
         for ( auto &pt : pts )
@@ -69,24 +72,22 @@ void display(void)
 
         polygons.push_back(pts);
         glEnd();
-
     }
-
     glFlush();
     glutSwapBuffers();
 }
 
 void mouse_move(int x, int y)
 {
-    currentPt = std::array<int, 2>{x, vp_height-y};
+    currentPt = std::array<int, 2> {x, vp_height-y};
     glutPostRedisplay();
 }
 
 void draw_polygon(int button, int state, int x, int y)
 {
-    if (currentActionSelected==0)
-        return;
-    currentPt = std::array<int, 2>{x, vp_height-y};
+   // if (currentActionSelected==0)
+     //   return;
+    currentPt = std::array<int, 2> {x, vp_height-y};
 
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
     {
@@ -96,21 +97,23 @@ void draw_polygon(int button, int state, int x, int y)
         pts.push_back( currentPt );
         points.push_back(currentPt);
 
+
     }
     if ( button == GLUT_MIDDLE_BUTTON && state == GLUT_DOWN)
     {
         int j =0;
         //closes polygon with the press of middle button
-            for (int i=0; i<pts.size(); i++)
-            {
-                printf("ola ta simeia %d %d\n", points[i], points[j]);
-                ++j;
-            }
-            points.clear()
+        for (int i=0; i<pts.size(); i++)
+        {
+            printf("ola ta simeia %d %d\n", points[i], points[j]);
+            ++j;
+        }
+        points.clear();
 
         closed = true;
-        currentActionSelected = 0;
+       // currentActionSelected = 0;
     }
+
 }
 
 void actionMenu(int value)
@@ -118,13 +121,18 @@ void actionMenu(int value)
     switch (value)
     {
     case 1:
-        exit(0);
-        break;
-
-    case 2:
         glutDisplayFunc(display);
         glutMouseFunc(draw_polygon);
         currentActionSelected = 1; // Selected action = draw polygon
+        break;
+    case 2:
+        exit(0);
+        break;
+    case 3:
+        exit(0);
+        break;
+    case 4:
+        exit(0);
         break;
     }
 }
@@ -234,12 +242,25 @@ void lineColorMenu (int value)
 
 void shapeColorMenu (int value)
 {
-   switch (value)
+    switch (value)
     {
     case 1:
         fillChosenColor[0] = 1.0f;
         fillChosenColor[1] = 0.0f;
         fillChosenColor[2] = 0.0f;
+        for(int i=0; i<vp_width;i++)
+        {
+            for(int j=0; i<vp_height;i++)
+            {
+                for(int k=0; i<points.size();i++)
+                {
+                    for(int z=0; i<points.size();i++)
+                    {
+                        SetPixelV(NULL, 298, 337, RGB(1,1,1));
+                    }
+                }
+            }
+        }
         break;
 
     case 2:
@@ -304,6 +325,32 @@ void shapeColorMenu (int value)
     }
 }
 
+void rulesMenu(int value)
+{
+    switch(value)
+    {
+        case 1:
+        exit(0);
+        break;
+
+        case 2:
+        exit(0);
+        break;
+
+        case 3:
+        exit(0);
+        break;
+
+        case 4:
+        exit(0);
+        break;
+
+        case 5:
+        exit(0);
+        break;
+    }
+}
+
 
 int main(int argc, char **argv)
 {
@@ -319,8 +366,10 @@ int main(int argc, char **argv)
     // to periergo stin glut einai oti kaneis create ta ipomenu
     //prota kai meta ta vazeis sto kentriko menu
     //ftiaxno prota ta submenu pou vriskontai mesa sto ACTION
-    glutAddMenuEntry("POLYGON", 2);//create submenu2
-    glutAddMenuEntry("EXIT", 1);//create submenu1
+    glutAddMenuEntry("POLYGON", 1);//create submenu2
+    glutAddMenuEntry("MOVE", 2);
+    glutAddMenuEntry("EXIT", 3);//create submenu1
+    glutAddMenuEntry("EXTRUDE", 4);
 
     lineColor = glutCreateMenu(lineColorMenu);
 
@@ -360,17 +409,22 @@ int main(int argc, char **argv)
     glutAddMenuEntry("ORCHID", 15);//RGB 0.854902 0.439216 0.839216
     glutAddMenuEntry("VIOLETRED", 16);//RGB 0.815686 0.12549 0.564706
 
+    rulemenu = glutCreateMenu(rulesMenu);
+
+    glutAddMenuEntry("RULE 0", 1);
+    glutAddMenuEntry("RULE 1", 2);
+    glutAddMenuEntry("RULE 2", 3);
+    glutAddMenuEntry("RULE 3", 4);
+    glutAddMenuEntry("RULE 4", 5);
+
     mainmenu = glutCreateMenu(menu);
 
     glutAddSubMenu("ACTION", action);
     glutAddSubMenu("LINE_COLOR", lineColor);
     glutAddSubMenu("FILL_COLOR", fillColor);
+    glutAddSubMenu("RULES", rulemenu);
 
-    //glutAddMenuEntry("RED", 1);
-    //glutAddMenuEntry("GREEN", 2);
-    //glutAddMenuEntry("BLUE", 3);
-    //glutAddSubMenu("LINE_COLOR", sub2);
-    //glutAddMenuEntry("FILL_COLOR", sub3);
+
     glutAttachMenu(GLUT_RIGHT_BUTTON);//right click to make menu appear
 
     glutDisplayFunc(display);
