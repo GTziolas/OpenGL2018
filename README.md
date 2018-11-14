@@ -1,18 +1,7 @@
 # OpenGL2017
 #TZIOLAS GEORGIOS AM:2591
-#KOKKINOS GEORGIOS AM:2462
-OpenGL Project for Graphics course 2017.
+#ZOUGIANOS GEORGIOS AM:2442
+OpenGL Project for Graphics course 2018.
 
-To menu anoigei me to deksi klik. Otan o xristis thelei na zografisei poligono
-to epilegei apo to action menu kai sti sinexeia klikarei tin kathe korifi.
-Gia na stamatisei na zografizei pataei middle click.
+ZOUGIANE DES TO PDF KAI TIN MAIN MONO TA ALLA USELESS
 
-
-
-
-
-TODO:
-i fill color pou gemizei to sxima me xroma den leitourgei
-prostethike to dummy pliktro move alla den kanei tpt
-prostethike to dummy menu rules alla den kanei tpt
-prostethike i epilogi extrude alla den kanei tpt
